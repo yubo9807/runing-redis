@@ -72,7 +72,11 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import cache from './cache';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var cache_1 = __importDefault(require("./cache"));
 var Redis = /** @class */ (function () {
     function Redis(maxCache) {
         if (maxCache === void 0) { maxCache = 1024 * 1024 * 2; }
@@ -107,10 +111,10 @@ var Redis = /** @class */ (function () {
                         _c.label = 3;
                     case 3:
                         _a;
-                        cache.set(key, value, overTime);
-                        return [2 /*return*/, cache.get(key)];
+                        cache_1.default.set(key, value, overTime);
+                        return [2 /*return*/, cache_1.default.get(key)];
                     case 4:
-                        data = cache.get(key);
+                        data = cache_1.default.get(key);
                         if (!data) return [3 /*break*/, 5];
                         return [2 /*return*/, { cache: true, data: data }];
                     case 5:
@@ -124,8 +128,8 @@ var Redis = /** @class */ (function () {
                         _c.label = 8;
                     case 8:
                         _b;
-                        cache.set(key, value, overTime); // 先存数据后清内存，防止溢出
-                        size = cache.size();
+                        cache_1.default.set(key, value, overTime); // 先存数据后清内存，防止溢出
+                        size = cache_1.default.size();
                         // 实际缓存的数据比设置缓存数大，进行数据清理
                         size > this.maxCache && this.clearCache();
                         return [2 /*return*/, { cache: false, data: value }];
@@ -137,10 +141,10 @@ var Redis = /** @class */ (function () {
     Redis.prototype.clearCache = function () {
         var e_1, _a;
         this.deleteOverValue(); // 清除已过期数据
-        var size = cache.size();
+        var size = cache_1.default.size();
         if (size < this.maxCache)
             return; // 再判断一次内存大小
-        var obj = cache.gainAll();
+        var obj = cache_1.default.gainAll();
         var arr = [];
         try {
             for (var _b = __values(Object.entries(obj)), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -163,7 +167,7 @@ var Redis = /** @class */ (function () {
     // 删除过期的数据
     Redis.prototype.deleteOverValue = function () {
         var e_2, _a;
-        var obj = cache.gainAll();
+        var obj = cache_1.default.gainAll();
         var curTime = Date.now();
         try {
             for (var _b = __values(Object.entries(obj)), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -171,7 +175,7 @@ var Redis = /** @class */ (function () {
                 var createTime = prop[1].createTime;
                 var overTime = prop[1].overTime;
                 if (curTime - createTime > overTime) {
-                    cache.delete(prop[0]);
+                    cache_1.default.delete(prop[0]);
                 }
             }
         }
@@ -187,15 +191,15 @@ var Redis = /** @class */ (function () {
     Redis.prototype.deleteFristValue = function (arr) {
         var key = arr[0].key;
         arr.shift();
-        cache.delete(key);
-        var size = cache.size();
+        cache_1.default.delete(key);
+        var size = cache_1.default.size();
         if (size <= this.maxCache)
             return;
         this.deleteFristValue(arr); // 如果容器内存依然大于设定内存，继续删
     };
     return Redis;
 }());
-export default Redis;
+exports.default = Redis;
 /**
  * 数据排序算法
  * @param arr
@@ -216,4 +220,3 @@ function choiceSort(arr) {
     }
     return arr;
 }
-console.log(11111);

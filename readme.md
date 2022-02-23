@@ -26,11 +26,13 @@ const r = new Redis(50000);  // 限制大小（字节）
 r.deposit('a', async() => await promise, 3000);
 ```
 
-### koa 中使用
+## koa 中使用
 
 - 封装下 runing-redis
+
 ```js
 const Redis = require('runing-redis');
+const redis = new Redis(50000);
 
 export default {
   /**
@@ -42,7 +44,7 @@ export default {
    * @param {boolean} cache 想知道有获取的数据有没有缓存
    * @returns 返回设置的 value
    */
-  async deposit(ctx, value?: Value, overTime: OverTime = -1, cover: Cover = false, cache = false) {
+  async deposit(ctx, value, overTime = -1, cover = false, cache = false) {
     let res = null;
     if (['string', 'symbol'].includes(typeof ctx)) {
       res = await redis.deposit(ctx, value, overTime, cover)
@@ -66,12 +68,13 @@ export default {
 ```
 
 ```js
-user.get('/label', async(ctx, next) => {
+user.get('/list', async(ctx, next) => {
 
-	const data = await redis.deposit(ctx, async () => {
-		return await sql_getUserList();  // runing-redis 中有缓存数据就不会运行
-	}, 100000)
+  const data = await redis.deposit(ctx, async () => {
+    return await sql_getUserList();  // runing-redis 中有缓存数据就不会运行
+  }, 100000)
 
-	ctx.body = data;
-	next();
+  ctx.body = data;
+  next();
 })
+```

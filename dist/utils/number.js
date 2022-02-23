@@ -25,11 +25,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createNum = void 0;
 /**
  * 数字生成器
  * @call const iter = createNum(); iter.next();
  */
-export function createNum() {
+function createNum() {
     var n;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -47,3 +49,4 @@ export function createNum() {
         }
     });
 }
+exports.createNum = createNum;

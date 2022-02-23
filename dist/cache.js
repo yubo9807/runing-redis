@@ -1,11 +1,13 @@
-import { createNum } from './utils/number';
-var iter = createNum(); // 数字生成器
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getLSUsedSpace = void 0;
+var number_1 = require("./utils/number");
+var iter = number_1.createNum(); // 数字生成器
 var map = new Map(); // 禁止导出，防止外部拿到直接修改内部数据
 /**
  * 默认导出一些对数据操作的方法
  * 对数据进行临时性缓存，获取即判断数据有无过期。
  */
-export default {
+exports.default = {
     /**
      * 设置缓存数据
      * @param {string | symbol} key 如果不想覆盖此属性，请将 key 设置为 Symbol 类型
@@ -62,7 +64,7 @@ export default {
  * @param obj
  * @returns
  */
-export function getLSUsedSpace(obj) {
+function getLSUsedSpace(obj) {
     var length = Object.keys(obj).reduce(function (total, curKey) {
         if (!obj.hasOwnProperty(curKey))
             return total;
@@ -83,3 +85,4 @@ export function getLSUsedSpace(obj) {
     }, 0);
     return length + symbolLen;
 }
+exports.getLSUsedSpace = getLSUsedSpace;

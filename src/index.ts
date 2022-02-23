@@ -115,15 +115,3 @@ function choiceSort(arr: SortArr[]) {
   }
   return arr;
 }
-
-const r = new Redis(50000);  // 限制大小（字节）
-
-(async () => {
-  const d = await r.deposit('a', async() => 11111, 3000)
-  console.log('d :>> ', d);  //--> { cache: false, data: 11111 }
-
-  setTimeout(async() => {
-    const d = await r.deposit('a', 22222, 1000)
-    console.log('d :>> ', d);  //--> { cache: true, data: 11111 }
-  }, 2000)
-})()
