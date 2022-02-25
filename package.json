@@ -1,11 +1,19 @@
 {
   "name": "runing-redis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./co/index.js"
+    }
+  },
   "scripts": {
     "dev": "nodemon --watch src -e ts --exec ts-node src/index.ts",
-    "build": "rm -rf dist & tsc"
+    "build:co": "rm -rf co & tsc --outDir co --module commonjs",
+    "build:es": "rm -rf es & tsc --outDir es --module es6",
+    "build": "npm run build:es & npm run build:co"
   },
   "repository": {
     "type": "git",
