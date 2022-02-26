@@ -12,6 +12,7 @@
         "noEmitOnError": true,  // 错误时不生成编译结果
         "strictPropertyInitialization": true,  // 更加严格的方式检查属性有无初始化
         "declaration": true,  // 编译自动生成 .d.ts 文件
+        "declarationDir": "./types",
         "sourceMap": false,  // 编译自动生成 .map 文件，用于调试
         "downlevelIteration": true
     },
