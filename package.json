@@ -1,6 +1,6 @@
 {
   "name": "runing-redis",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "types/",
   "exports": {
@@ -9,10 +9,6 @@
       "import": "./es/index.js"
     }
   },
-  "files": [
-    "co/",
-    "es/"
-  ],
   "scripts": {
     "dev": "nodemon --watch src -e ts --exec ts-node src/index.ts",
     "build:co": "rm -rf co & tsc --outDir co --module commonjs",
